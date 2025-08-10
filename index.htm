@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ماشین‌حساب سقف کاذب</title>
+  <style>
+    body {
+      font-family: Tahoma, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 0 20px;
+      direction: rtl;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #005ea1;
+    }
+    .result {
+      margin-top: 25px;
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #555;
+      border-top: 1px solid #ccc;
+      padding-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ماشین‌حساب سقف کاذب تایل ۶۰×۶۰</h1>
+
+  <label for="length">طول سقف (متر):</label>
+  <input type="number" id="length" min="0" placeholder="مثلاً 5" />
+
+  <label for="width">عرض سقف (متر):</label>
+  <input type="number" id="width" min="0" placeholder="مثلاً 4" />
+
+  <button onclick="calculateMaterials()">محاسبه متریال</button>
+
+  <div class="result" id="result"></div>
+
+  <footer>
+    طراحی توسط امیر فخاری جهت سهولت در سفارش گذاری، خرید، حمل و نقل و محاسبات مالی سقف کاذب شرکت ایران‌خودرو
+  </footer>
+
+  <script>
+    function calculateMaterials() {
+      const length = parseFloat(document.getElementById('length').value);
+      const width = parseFloat(document.getElementById('width').value);
+
+      if (isNaN(length) || length <= 0 || isNaN(width) || width <= 0) {
+        alert('لطفاً طول و عرض معتبر وارد کنید.');
+        return;
+      }
+
+      const area = length * width;
+
+      // مساحت هر تایل: 0.6 * 0.6 = 0.36 متر مربع
+      const tileArea = 0.6 * 0.6;
+
+      // تعداد تایل لازم:
+      const tiles = Math.ceil(area / tileArea);
+
+      // محیط سقف برای نبشی دیواری (دور تا دور)
+      const perimeter = 2 * (length + width);
+
+      // طول کل سازه نگهدارنده به ازای هر متر مربع 1.2 متر
+      const totalFrameLength = area * 1.2;
+
+      // تقسیم طول سازه به اجزای 3.6، 1.2 و 0.6 به نسبت فرضی  
+      // فرض: 30% سازه 3.6 متری، 40% سازه 1.2 متری، 30% سازه 0.6 متری
+
+      const frame_360 = totalFrameLength * 0.3; // متر
+      const frame_120 = totalFrameLength * 0.4; // متر
+      const frame_60 = totalFrameLength * 0.3;  // متر
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `
+        <p>متراژ کل سقف: <strong>${area.toFixed(2)}</strong> متر مربع</p>
+        <p>تعداد تایل مورد نیاز: <strong>${tiles}</strong> عدد</p>
+        <p>نبشی دیواری (دور سقف): <strong>${perimeter.toFixed(2)}</strong> متر</p>
+        <p>طول سازه ۳/۶۰: <strong>${frame_360.toFixed(2)}</strong> متر</p>
+        <p>طول سازه ۱۲۰: <strong>${frame_120.toFixed(2)}</strong> متر</p>
+        <p>طول سازه ۶۰: <strong>${frame_60.toFixed(2)}</strong> متر</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
